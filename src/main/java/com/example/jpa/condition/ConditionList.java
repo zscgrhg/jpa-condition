@@ -169,6 +169,14 @@ public class ConditionList<T> {
             return this;
         }
 
+        public Builder notLike(String path, String param, Like.Mode mode) {
+            if (null != param) {
+                Like like = new Like(path, param, mode, true);
+                conditionList.add(like);
+            }
+            return this;
+        }
+
         public Builder isMember(String path, Object param) {
             if (null != param) {
                 IsMember v_isMember = new IsMember(path, false, param);
@@ -194,7 +202,6 @@ public class ConditionList<T> {
         }
 
 
-
         public Builder isEmpty(String path, Boolean param) {
             if (null != param) {
                 Empty v_notEmpty = new Empty(path, param);
@@ -202,7 +209,6 @@ public class ConditionList<T> {
             }
             return this;
         }
-
 
 
         public abstract void conditions();

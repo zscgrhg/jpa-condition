@@ -12,11 +12,20 @@ public class Like<T> extends PathCondition<T, String> {
     }
 
     final Mode matchMode;
+    final boolean notLike;
+
+    public Like(String path, String param, Mode matchMode, final boolean notLike) {
+
+        super(path, param);
+        this.matchMode = matchMode;
+        this.notLike = notLike;
+    }
 
     public Like(String path, String param, Mode matchMode) {
 
         super(path, param);
         this.matchMode = matchMode;
+        this.notLike = false;
     }
 
     @Override
@@ -33,7 +42,11 @@ public class Like<T> extends PathCondition<T, String> {
             default:
                 t = "%" + param + "%";
         }
-        Predicate like = cb.like(p, t);
-        predicates.add(like);
+        if (notLike) {
+            predicates.add(cb.notLike(p, t));
+        } else {
+            predicates.add(cb.like(p, t));
+        }
+
     }
 }
