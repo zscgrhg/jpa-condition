@@ -22,24 +22,39 @@ public interface ConditionExcuter<T> {
     }
 
     default int countByConditions(ConditionList<T> conditionList) {
-        CriteriaQuery v_queryByCondition
+        CriteriaQuery query
                 = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
-        Set<Root<T>> v_roots = v_queryByCondition.getRoots();
-        Root<T> v_next = v_roots.iterator().next();
+        Set<Root<T>> v_roots = query.getRoots();
+        Root<T> root = v_roots.iterator().next();
         CriteriaQuery v_select =
-                v_queryByCondition.select(getEntityManager().getCriteriaBuilder().count(v_next));
+                query.select(getEntityManager().getCriteriaBuilder().count(root));
         javax.persistence.Query q = getEntityManager().createQuery(v_select);
         return ((Long) q.getSingleResult()).intValue();
     }
 
     default List<T> findByConditions(ConditionList<T> conditionList) {
-        CriteriaQuery v_queryByCondition
+        CriteriaQuery query
                 = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
-        javax.persistence.Query q = getEntityManager().createQuery(v_queryByCondition);
+        Set<Root<T>> v_roots = query.getRoots();
+        Root<T> root = v_roots.iterator().next();
+        CriteriaQuery v_select =
+                query.select(root);
+        javax.persistence.Query q = getEntityManager().createQuery(v_select);
         if (conditionList.page >= 0 && conditionList.pageSize > 0) {
             q.setFirstResult(conditionList.getFirstResult());
             q.setMaxResults(conditionList.pageSize);
         }
         return q.getResultList();
+    }
+
+    default T getSingleResult(ConditionList<T> conditionList) {
+        CriteriaQuery query
+                = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
+        Set<Root<T>> v_roots = query.getRoots();
+        Root<T> root = v_roots.iterator().next();
+        CriteriaQuery<T> v_select =
+                query.select(root);
+        javax.persistence.Query q = getEntityManager().createQuery(v_select);
+        return (T) q.getSingleResult();
     }
 }

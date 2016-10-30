@@ -53,7 +53,6 @@ public class ConditionUtil {
             SingularAttribute<?, ?> id = entityType.getId(javaType);
             cq.orderBy(cb.desc(rt.get(id)));
         }
-        cq.select(rt);
         return cq;
     }
 }

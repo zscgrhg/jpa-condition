@@ -80,12 +80,8 @@ public class ApplicationTests {
 
         UserService v_userService = new UserService();
         v_userService.setEm(em);
-        CriteriaQuery v_query = v_userService.createQuery(v_build);
 
-        TypedQuery<UUser> query = em.createQuery(v_query);
-        query.setFirstResult(0);
-        query.setMaxResults(10);
-        UUser user = query.getSingleResult();
+        UUser user = v_userService.getSingleResult(v_build);
 
         assertEquals(name, user.getUsername());
     }
@@ -98,9 +94,7 @@ public class ApplicationTests {
         ConditionList<UUser> v_build = v_builder.build();
         UserService v_userService = new UserService();
         v_userService.setEm(em);
-        CriteriaQuery v_query = v_userService.createQuery(v_build);
-        TypedQuery<UUser> query = em.createQuery(v_query);
-        UUser user = query.getSingleResult();
+        UUser user = v_userService.getSingleResult(v_build);
         assertEquals(name, user.getUsername());
     }
 
@@ -112,9 +106,7 @@ public class ApplicationTests {
         ConditionList<UUser> v_build = v_builder.build();
         UserService v_userService = new UserService();
         v_userService.setEm(em);
-        CriteriaQuery v_query = v_userService.createQuery(v_build);
-        TypedQuery<UUser> query = em.createQuery(v_query);
-        List<UUser> v_resultList = query.getResultList();
+        List<UUser> v_resultList = v_userService.findByConditions(v_build);
         assertEquals(5, v_resultList.size());
     }
 
@@ -126,9 +118,7 @@ public class ApplicationTests {
         ConditionList<UUser> v_build = v_builder.build();
         UserService v_userService = new UserService();
         v_userService.setEm(em);
-        CriteriaQuery v_query = v_userService.createQuery(v_build);
-        TypedQuery<UUser> query = em.createQuery(v_query);
-        List<UUser> v_resultList = query.getResultList();
+        List<UUser> v_resultList = v_userService.findByConditions(v_build);
         assertEquals(0, v_resultList.size());
     }
 
@@ -140,9 +130,7 @@ public class ApplicationTests {
         ConditionList<UUser> v_build = v_builder.build();
         UserService v_userService = new UserService();
         v_userService.setEm(em);
-        CriteriaQuery v_query = v_userService.createQuery(v_build);
-        TypedQuery<UUser> query = em.createQuery(v_query);
-        List<UUser> v_resultList = query.getResultList();
+        List<UUser> v_resultList = v_userService.findByConditions(v_build);
         assertEquals(5, v_resultList.size());
     }
 
@@ -154,21 +142,30 @@ public class ApplicationTests {
         ConditionList<UUser> v_build = v_builder.build();
         UserService v_userService = new UserService();
         v_userService.setEm(em);
-        CriteriaQuery v_query = v_userService.createQuery(v_build);
-        TypedQuery<UUser> query = em.createQuery(v_query);
-        List<UUser> v_resultList = query.getResultList();
+        List<UUser> v_resultList = v_userService.findByConditions(v_build);
         assertEquals(0, v_resultList.size());
     }
 
-    public void testNotEmpty(){
+    @Test
+    public void testNotEmpty() {
         UserConditionBuilder v_builder = new UserConditionBuilder();
         v_builder.setGroupIsEmpty(false);
         ConditionList<UUser> v_build = v_builder.build();
         UserService v_userService = new UserService();
         v_userService.setEm(em);
-        CriteriaQuery v_query = v_userService.createQuery(v_build);
-        TypedQuery<UUser> query = em.createQuery(v_query);
-        List<UUser> v_resultList = query.getResultList();
+
+        List<UUser> v_resultList = v_userService.findByConditions(v_build);
         assertEquals(5, v_resultList.size());
+    }
+
+    @Test
+    public void testCount() {
+        UserConditionBuilder v_builder = new UserConditionBuilder();
+        v_builder.setGroupIsEmpty(false);
+        ConditionList<UUser> v_build = v_builder.build();
+        UserService v_userService = new UserService();
+        v_userService.setEm(em);
+        int count = v_userService.countByConditions(v_build);
+        assertEquals(5, count);
     }
 }
