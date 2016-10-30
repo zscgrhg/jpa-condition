@@ -56,7 +56,7 @@ publish {
     artifactId = 'condition'
     version = project.version
     description = 'realm browser for android'
-    website = 'https://github.com/zscgrhg/stetho-realm-browser'
-    issueTracker = 'https://github.com/zscgrhg/stetho-realm-browser/issues'
-    repository = 'https://github.com/zscgrhg/stetho-realm-browser.git'
+    website = 'https://github.com/zscgrhg/jpa-condition'
+    issueTracker = 'https://github.com/zscgrhg/jpa-condition/issues'
+    repository = 'https://github.com/zscgrhg/jpa-condition.git'
 }
