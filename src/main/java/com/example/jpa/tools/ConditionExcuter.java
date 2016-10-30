@@ -38,7 +38,7 @@ public interface ConditionExcuter<T> {
         javax.persistence.Query q = getEntityManager().createQuery(v_queryByCondition);
         if (conditionList.page >= 0 && conditionList.pageSize > 0) {
             q.setFirstResult(conditionList.getFirstResult());
-            q.setMaxResults(conditionList.getFirstResult() + conditionList.pageSize);
+            q.setMaxResults(conditionList.pageSize);
         }
         return q.getResultList();
     }

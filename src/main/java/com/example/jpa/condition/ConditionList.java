@@ -38,7 +38,7 @@ public class ConditionList<T> {
 
         protected List<Condition<E>> conditionList = new ArrayList<>();
         protected boolean distinct = false;
-        protected int page = -1;
+        protected int page = 0;
         protected int pageSize = 10;
         protected List<String> orderByList;
 
@@ -76,6 +76,11 @@ public class ConditionList<T> {
 
         public Builder distinct() {
             distinct = true;
+            return this;
+        }
+
+        public Builder maxResult(int max) {
+            pageSize = Math.min(Math.abs(max), Math.abs(pageSize));
             return this;
         }
 
@@ -137,7 +142,7 @@ public class ConditionList<T> {
         }
 
 
-        public  Builder in(String path, Object... param) {
+        public Builder in(String path, Object... param) {
             if (param != null) {
                 In in = new In(path, false, param);
                 conditionList.add(in);
