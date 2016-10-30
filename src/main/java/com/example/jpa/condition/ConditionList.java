@@ -137,7 +137,7 @@ public class ConditionList<T> {
         }
 
 
-        public Builder in(String path, Object... param) {
+        public  Builder in(String path, Object... param) {
             if (param != null) {
                 In in = new In(path, false, param);
                 conditionList.add(in);
