@@ -130,15 +130,32 @@ public class ConditionList<T> {
 
         public Builder in(String path, Collection param) {
             if (null != param) {
-                In in = new In(path, param);
+                In in = new In(path, false, param);
                 conditionList.add(in);
             }
             return this;
         }
 
+
         public Builder in(String path, Object... param) {
             if (param != null) {
-                In in = new In(path, param);
+                In in = new In(path, false, param);
+                conditionList.add(in);
+            }
+            return this;
+        }
+
+        public Builder notIn(String path, Object... param) {
+            if (param != null) {
+                In in = new In(path, true, param);
+                conditionList.add(in);
+            }
+            return this;
+        }
+
+        public Builder notIn(String path, Collection param) {
+            if (null != param) {
+                In in = new In(path, true, param);
                 conditionList.add(in);
             }
             return this;
@@ -154,11 +171,39 @@ public class ConditionList<T> {
 
         public Builder isMember(String path, Object param) {
             if (null != param) {
-                IsMember v_isMember = new IsMember(path, param);
+                IsMember v_isMember = new IsMember(path, false, param);
                 conditionList.add(v_isMember);
             }
             return this;
         }
+
+        public Builder notMember(String path, Object param) {
+            if (null != param) {
+                IsMember v_isMember = new IsMember(path, true, param);
+                conditionList.add(v_isMember);
+            }
+            return this;
+        }
+
+        public Builder isNull(String path, Boolean param) {
+            if (null != param) {
+                NullValue v_notNull = new NullValue(path, param);
+                conditionList.add(v_notNull);
+            }
+            return this;
+        }
+
+
+
+        public Builder isEmpty(String path, Boolean param) {
+            if (null != param) {
+                Empty v_notEmpty = new Empty(path, param);
+                conditionList.add(v_notEmpty);
+            }
+            return this;
+        }
+
+
 
         public abstract void conditions();
 

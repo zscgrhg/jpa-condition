@@ -159,4 +159,16 @@ public class ApplicationTests {
         List<UUser> v_resultList = query.getResultList();
         assertEquals(0, v_resultList.size());
     }
+
+    public void testNotEmpty(){
+        UserConditionBuilder v_builder = new UserConditionBuilder();
+        v_builder.setGroupIsEmpty(false);
+        ConditionList<UUser> v_build = v_builder.build();
+        UserService v_userService = new UserService();
+        v_userService.setEm(em);
+        CriteriaQuery v_query = v_userService.createQuery(v_build);
+        TypedQuery<UUser> query = em.createQuery(v_query);
+        List<UUser> v_resultList = query.getResultList();
+        assertEquals(5, v_resultList.size());
+    }
 }

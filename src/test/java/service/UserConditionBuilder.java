@@ -14,10 +14,13 @@ public class UserConditionBuilder extends ConditionList.Builder<UUser> {
     private Boolean enabled;
     private String role;
     private String usernameLike;
+
     public Boolean isEnabled() {
         return enabled;
     }
 
+
+    public Boolean groupIsEmpty;
     String[] passwords;
 
     public void setEnabled(final Boolean enabled) {
@@ -48,12 +51,21 @@ public class UserConditionBuilder extends ConditionList.Builder<UUser> {
         this.role = role;
     }
 
+    public Boolean getGroupIsEmpty() {
+        return groupIsEmpty;
+    }
+
+    public void setGroupIsEmpty(final Boolean groupIsEmpty) {
+        this.groupIsEmpty = groupIsEmpty;
+    }
+
     @Override
     public void conditions() {
-        eq("username",username);
-        eq("enabled",enabled);
-        isMember("groups.authorities",role);
-        in("password",passwords);
-        like("username",usernameLike, Like.Mode.ANYWHERE);
+        eq("username", username);
+        eq("enabled", enabled);
+        isMember("groups.authorities", role);
+        in("password", passwords);
+        like("username", usernameLike, Like.Mode.ANYWHERE);
+        isEmpty("groups", groupIsEmpty);
     }
 }
