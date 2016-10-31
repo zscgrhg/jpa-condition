@@ -1,5 +1,7 @@
 package com.example.jpa.condition;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Path;
 import javax.persistence.criteria.Root;
@@ -7,6 +9,7 @@ import javax.persistence.criteria.Root;
 /**
  * Created by THINK on 2016/10/30.
  */
+@EqualsAndHashCode
 public abstract class PathCondition<T, O> implements Condition<T> {
 
     final String path;

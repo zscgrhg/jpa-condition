@@ -1,5 +1,7 @@
 package com.example.jpa.condition;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.criteria.*;
 import java.util.Arrays;
 import java.util.Collection;
@@ -8,6 +10,7 @@ import java.util.List;
 /**
  * Created by THINK on 2016/10/23.
  */
+@EqualsAndHashCode(callSuper = true)
 public class In<T> extends PathCondition<T, Collection> {
 
     final boolean notIn;

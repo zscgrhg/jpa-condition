@@ -1,29 +1,26 @@
 package com.example.jpa.condition;
 
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+
 /**
  * Created by THINK on 2016/10/30.
  */
+@EqualsAndHashCode
+@Getter
 public class OrderBy {
     final String property;
     final boolean asc;
 
-    public String getProperty() {
-        return property;
-    }
-
-    public boolean isAsc() {
-        return asc;
-    }
 
     public OrderBy(final String prop) {
-
-        if (prop.startsWith("-")) {
+        String p = prop.trim();
+        if (p.startsWith("-")) {
             this.asc = false;
-            this.property = prop.substring(1);
+            this.property = p.substring(1);
         } else {
             this.asc = true;
-            this.property = prop;
+            this.property = p;
         }
-
     }
 }

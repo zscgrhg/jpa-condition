@@ -1,13 +1,14 @@
 package com.example.jpa.condition;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+
+import java.util.*;
 
 /**
  * Created by THINK on 2016/10/30.
  */
+@EqualsAndHashCode
 public class ConditionList<T> {
     public final List<Condition<T>> conditionList;
     public final boolean distinct;
@@ -34,48 +35,26 @@ public class ConditionList<T> {
         this.orderByList = orderByList;
     }
 
+    @Data
+    @EqualsAndHashCode
     public abstract static class Builder<E> {
 
-        protected List<Condition<E>> conditionList = new ArrayList<>();
+        private List<Condition<E>> conditionList = new ArrayList<>();
         protected boolean distinct = false;
         protected int page = 0;
         protected int pageSize = 10;
         protected List<String> orderByList;
 
-        public boolean isDistinct() {
-            return distinct;
-        }
-
-        public void setDistinct(final boolean distinct) {
-            this.distinct = distinct;
-        }
-
-        public int getPage() {
-            return page;
-        }
-
-        public void setPage(final int page) {
-            this.page = page;
-        }
-
-        public int getPageSize() {
-            return pageSize;
-        }
-
-        public void setPageSize(final int pageSize) {
-            this.pageSize = pageSize;
-        }
-
-        public List<String> getOrderByList() {
-            return orderByList;
-        }
-
-        public void setOrderByList(final List<String> orderByList) {
-            this.orderByList = orderByList;
-        }
 
         public Builder distinct() {
             distinct = true;
+            return this;
+        }
+
+        public Builder orderBy(String... orders) {
+            if (orders != null) {
+                orderByList.addAll(Arrays.asList(orders));
+            }
             return this;
         }
 
@@ -220,14 +199,18 @@ public class ConditionList<T> {
 
         public ConditionList<E> build() {
             conditions();
-            List<Condition<E>> v_conditions = Collections.unmodifiableList(conditionList);
+            List conditions = new ArrayList();
+            conditions.addAll(conditionList);
+            List<Condition<E>> v_conditions = Collections.unmodifiableList(conditions);
+
             List<OrderBy> orderBy = new ArrayList<>();
             if (orderByList != null) {
                 for (String v_s : orderByList) {
                     orderBy.add(new OrderBy(v_s));
                 }
             }
-            return new ConditionList<E>(v_conditions, distinct, page, pageSize, Collections.unmodifiableList(orderBy));
+            List<OrderBy> v_orderByList = Collections.unmodifiableList(orderBy);
+            return new ConditionList<E>(v_conditions, distinct, page, pageSize, v_orderByList);
         }
     }
 }

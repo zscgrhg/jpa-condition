@@ -1,11 +1,14 @@
 package com.example.jpa.condition;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.criteria.*;
 import java.util.List;
 
 /**
  * Created by THINK on 2016/10/30.
  */
+@EqualsAndHashCode(callSuper = true)
 public class Compare<T> extends PathCondition<T, Comparable> {
 
 

@@ -131,6 +131,7 @@ public class ApplicationTests {
         UserService v_userService = new UserService();
         v_userService.setEm(em);
         List<UUser> v_resultList = v_userService.findByConditions(v_build);
+        System.out.println(1);
         assertEquals(5, v_resultList.size());
     }
 

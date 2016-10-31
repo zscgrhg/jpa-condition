@@ -1,11 +1,14 @@
 package com.example.jpa.condition;
 
+import lombok.EqualsAndHashCode;
+
 import javax.persistence.criteria.*;
 import java.util.List;
 
 /**
  * Created by THINK on 2016/10/23.
  */
+@EqualsAndHashCode(callSuper = true)
 public class IsMember<T> extends PathCondition<T, Object> {
     final boolean notMember;
     public IsMember(final String path, final boolean notMember,final Object param) {
