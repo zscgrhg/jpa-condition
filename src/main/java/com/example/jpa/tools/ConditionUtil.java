@@ -20,7 +20,7 @@ import java.util.List;
  * Created by THINK on 2016/10/30.
  */
 public class ConditionUtil {
-    public static <T> CriteriaQuery createQueryByCondition(EntityManager em, Class<T> clazz, ConditionList<T> conditionList) {
+    public static <T> CriteriaQueryHolder<T> createQueryByCondition(EntityManager em, Class<T> clazz, ConditionList<T> conditionList) {
         Metamodel metamodel = em.getMetamodel();
         EntityType<?> entityType = metamodel.entity(clazz);
 
@@ -53,6 +53,6 @@ public class ConditionUtil {
             SingularAttribute<?, ?> id = entityType.getId(javaType);
             cq.orderBy(cb.desc(rt.get(id)));
         }
-        return cq;
+        return new CriteriaQueryHolder<T>(rt, cq, conditionList);
     }
 }

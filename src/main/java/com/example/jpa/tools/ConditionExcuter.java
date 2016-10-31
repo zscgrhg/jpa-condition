@@ -3,6 +3,7 @@ package com.example.jpa.tools;
 import com.example.jpa.condition.ConditionList;
 
 import javax.persistence.EntityManager;
+import javax.persistence.LockModeType;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
@@ -17,15 +18,17 @@ public interface ConditionExcuter<T> {
 
     Class<T> getEntityClass();
 
-    default CriteriaQuery createQuery(ConditionList<T> conditionList) {
+    default CriteriaQueryHolder createQuery(ConditionList<T> conditionList) {
         return ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
     }
 
+
+
     default int countByConditions(ConditionList<T> conditionList) {
-        CriteriaQuery query
+        CriteriaQueryHolder v_queryHolder
                 = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
-        Set<Root<T>> v_roots = query.getRoots();
-        Root<T> root = v_roots.iterator().next();
+        CriteriaQuery query = v_queryHolder.getQuery();
+        Root<T> root = v_queryHolder.getRoot();
         CriteriaQuery v_select =
                 query.select(getEntityManager().getCriteriaBuilder().count(root));
         javax.persistence.Query q = getEntityManager().createQuery(v_select);
@@ -33,28 +36,39 @@ public interface ConditionExcuter<T> {
     }
 
     default List<T> findByConditions(ConditionList<T> conditionList) {
-        CriteriaQuery query
+        return findByConditions(conditionList, LockModeType.NONE);
+    }
+
+    default List<T> findByConditions(ConditionList<T> conditionList, LockModeType lockModeType) {
+        CriteriaQueryHolder v_queryHolder
                 = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
-        Set<Root<T>> v_roots = query.getRoots();
-        Root<T> root = v_roots.iterator().next();
+        CriteriaQuery v_query = v_queryHolder.getQuery();
+        Root<T> root = v_queryHolder.getRoot();
         CriteriaQuery v_select =
-                query.select(root);
+                v_query.select(root);
         javax.persistence.Query q = getEntityManager().createQuery(v_select);
+
         if (conditionList.page >= 0 && conditionList.pageSize > 0) {
             q.setFirstResult(conditionList.getFirstResult());
             q.setMaxResults(conditionList.pageSize);
         }
+        q.setLockMode(lockModeType);
         return q.getResultList();
     }
 
     default T getSingleResult(ConditionList<T> conditionList) {
-        CriteriaQuery query
+        return getSingleResult(conditionList, LockModeType.NONE);
+    }
+
+    default T getSingleResult(ConditionList<T> conditionList, LockModeType lockModeType) {
+        CriteriaQueryHolder v_queryHolder
                 = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
-        Set<Root<T>> v_roots = query.getRoots();
-        Root<T> root = v_roots.iterator().next();
+        CriteriaQuery v_query = v_queryHolder.getQuery();
+        Root<T> root = v_queryHolder.getRoot();
         CriteriaQuery<T> v_select =
-                query.select(root);
+                v_query.select(root);
         javax.persistence.Query q = getEntityManager().createQuery(v_select);
+        q.setLockMode(lockModeType);
         return (T) q.getSingleResult();
     }
 }
