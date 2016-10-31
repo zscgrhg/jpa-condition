@@ -3,11 +3,15 @@ package service;
 import com.example.jpa.condition.ConditionList;
 import com.example.jpa.condition.Like;
 import domain.UUser;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 
 /**
  * Created by THINK on 2016/10/30.
  */
+@Data
+@EqualsAndHashCode(callSuper = true)
 public class UserConditionBuilder extends ConditionList.Builder<UUser> {
 
     private String username;
@@ -15,49 +19,13 @@ public class UserConditionBuilder extends ConditionList.Builder<UUser> {
     private String role;
     private String usernameLike;
 
-    public Boolean isEnabled() {
-        return enabled;
-    }
+
 
 
     public Boolean groupIsEmpty;
     String[] passwords;
 
-    public void setEnabled(final Boolean enabled) {
-        this.enabled = enabled;
-    }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(final String username) {
-        this.username = username;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public String getUsernameLike() {
-        return usernameLike;
-    }
-
-    public void setUsernameLike(final String usernameLike) {
-        this.usernameLike = usernameLike;
-    }
-
-    public void setRole(final String role) {
-        this.role = role;
-    }
-
-    public Boolean getGroupIsEmpty() {
-        return groupIsEmpty;
-    }
-
-    public void setGroupIsEmpty(final Boolean groupIsEmpty) {
-        this.groupIsEmpty = groupIsEmpty;
-    }
 
     @Override
     public void conditions() {

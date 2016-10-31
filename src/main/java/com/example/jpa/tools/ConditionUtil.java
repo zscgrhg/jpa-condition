@@ -27,7 +27,7 @@ public class ConditionUtil {
         CriteriaBuilder cb = em.getCriteriaBuilder();
         CriteriaQuery cq = cb.createQuery();
         Root rt = cq.from(clazz);
-        List<Predicate> predicates = new ArrayList<>();
+        List<Predicate> predicates = new ArrayList();
 
         List<Condition<T>> v_conditionList = conditionList.getConditionList();
         for (Condition<T> v_tCondition : v_conditionList) {

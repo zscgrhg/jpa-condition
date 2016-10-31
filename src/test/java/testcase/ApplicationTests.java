@@ -11,8 +11,10 @@ import org.junit.Test;
 import service.UserConditionBuilder;
 import service.UserService;
 
-import javax.persistence.*;
-import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -30,19 +32,19 @@ public class ApplicationTests {
         GGroup v_group = new GGroup();
         v_group.setName("admin");
         v_group.setDescription("no.1");
-        HashSet<String> v_authorities = new HashSet<>();
+        HashSet<String> v_authorities = new HashSet();
         v_authorities.add(RoleConst.ROLE_ADMIN);
         v_authorities.add(RoleConst.ROLE_USER);
         v_group.setAuthorities(v_authorities);
         em.persist(v_group);
-        HashSet<UUser> v_users = new HashSet<>();
+        HashSet<UUser> v_users = new HashSet();
         v_group.setUsers(v_users);
         for (int i = 0; i < 5; i++) {
             UUser v_uUser = new UUser();
             v_uUser.setUsername("user " + i);
             v_uUser.setPassword("1234");
             v_uUser.setEnabled(true);
-            ArrayList<GGroup> v_groups = new ArrayList<>();
+            ArrayList<GGroup> v_groups = new ArrayList();
             v_groups.add(v_group);
             v_uUser.setGroups(v_groups);
             v_group.getUsers().add(v_uUser);

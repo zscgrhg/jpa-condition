@@ -7,24 +7,22 @@ import javax.persistence.LockModeType;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by THINK on 2016/10/30.
  */
-public interface ConditionExcuter<T> {
+public abstract class ConditionExcuter<T> {
 
-    EntityManager getEntityManager();
+    public abstract EntityManager getEntityManager();
 
-    Class<T> getEntityClass();
+    public abstract Class<T> getEntityClass();
 
-    default CriteriaQueryHolder createQuery(ConditionList<T> conditionList) {
+    public CriteriaQueryHolder createQuery(ConditionList<T> conditionList) {
         return ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
     }
 
 
-
-    default int countByConditions(ConditionList<T> conditionList) {
+    public int countByConditions(ConditionList<T> conditionList) {
         CriteriaQueryHolder v_queryHolder
                 = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
         CriteriaQuery query = v_queryHolder.getQuery();
@@ -35,11 +33,11 @@ public interface ConditionExcuter<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
 
-    default List<T> findByConditions(ConditionList<T> conditionList) {
+    public List<T> findByConditions(ConditionList<T> conditionList) {
         return findByConditions(conditionList, LockModeType.NONE);
     }
 
-    default List<T> findByConditions(ConditionList<T> conditionList, LockModeType lockModeType) {
+    public List<T> findByConditions(ConditionList<T> conditionList, LockModeType lockModeType) {
         CriteriaQueryHolder v_queryHolder
                 = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
         CriteriaQuery v_query = v_queryHolder.getQuery();
@@ -56,11 +54,11 @@ public interface ConditionExcuter<T> {
         return q.getResultList();
     }
 
-    default T getSingleResult(ConditionList<T> conditionList) {
+    public T getSingleResult(ConditionList<T> conditionList) {
         return getSingleResult(conditionList, LockModeType.NONE);
     }
 
-    default T getSingleResult(ConditionList<T> conditionList, LockModeType lockModeType) {
+    public T getSingleResult(ConditionList<T> conditionList, LockModeType lockModeType) {
         CriteriaQueryHolder v_queryHolder
                 = ConditionUtil.createQueryByCondition(getEntityManager(), getEntityClass(), conditionList);
         CriteriaQuery v_query = v_queryHolder.getQuery();

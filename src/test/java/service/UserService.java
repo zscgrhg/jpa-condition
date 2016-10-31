@@ -1,7 +1,6 @@
 package service;
 
 
-
 import com.example.jpa.tools.ConditionExcuter;
 import domain.UUser;
 
@@ -10,7 +9,7 @@ import javax.persistence.EntityManager;
 /**
  * Created by THINK on 2016/10/30.
  */
-public class UserService implements ConditionExcuter<UUser> {
+public class UserService extends ConditionExcuter<UUser> {
     EntityManager em;
 
     public EntityManager getEm() {

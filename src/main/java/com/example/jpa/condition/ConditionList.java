@@ -39,7 +39,7 @@ public class ConditionList<T> {
     @EqualsAndHashCode
     public abstract static class Builder<E> {
 
-        private List<Condition<E>> conditionList = new ArrayList<>();
+        private List<Condition<E>> conditionList = new ArrayList();
         protected boolean distinct = false;
         protected int page = 0;
         protected int pageSize = 10;
@@ -120,7 +120,7 @@ public class ConditionList<T> {
             return this;
         }
 
-
+        @SuppressWarnings({"varargs","unchecked"})
         public Builder in(String path, Object... param) {
             if (param != null) {
                 In in = new In(path, false, param);
@@ -128,7 +128,7 @@ public class ConditionList<T> {
             }
             return this;
         }
-
+        @SuppressWarnings({"varargs","unchecked"})
         public Builder notIn(String path, Object... param) {
             if (param != null) {
                 In in = new In(path, true, param);
@@ -194,7 +194,7 @@ public class ConditionList<T> {
             return this;
         }
 
-
+        @SuppressWarnings({"varargs","unchecked"})
         public abstract void conditions();
 
         public ConditionList<E> build() {
@@ -203,7 +203,7 @@ public class ConditionList<T> {
             conditions.addAll(conditionList);
             List<Condition<E>> v_conditions = Collections.unmodifiableList(conditions);
 
-            List<OrderBy> orderBy = new ArrayList<>();
+            List<OrderBy> orderBy = new ArrayList();
             if (orderByList != null) {
                 for (String v_s : orderByList) {
                     orderBy.add(new OrderBy(v_s));

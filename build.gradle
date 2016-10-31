@@ -8,12 +8,12 @@ buildscript {
 }
 
 group 'com.example'
-version '0.0.02beta'
+version '0.0.03beta'
 
 apply plugin: 'java'
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.6
+targetCompatibility = 1.6
 
 allprojects {
     tasks.withType(JavaCompile) {
