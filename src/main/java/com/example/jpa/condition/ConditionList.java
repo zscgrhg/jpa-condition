@@ -43,7 +43,7 @@ public class ConditionList<T> {
         protected boolean distinct = false;
         protected int page = 0;
         protected int pageSize = 10;
-        protected List<String> orderByList;
+        protected List<String> orderByList = new ArrayList<>();
 
 
         public Builder distinct() {
