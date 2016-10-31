@@ -3,14 +3,15 @@
   <groupId>com.example</groupId>
   <artifactId>condition</artifactId>
   <versioning>
-    <release>0.0.03beta</release>
+    <release>0.0.04beta</release>
     <versions>
       <version>0.1.0beta</version>
       <version>0.0.4beta</version>
       <version>0.0.01beta</version>
       <version>0.0.02beta</version>
       <version>0.0.03beta</version>
+      <version>0.0.04beta</version>
     </versions>
-    <lastUpdated>20161031110007</lastUpdated>
+    <lastUpdated>20161031111908</lastUpdated>
   </versioning>
 </metadata>

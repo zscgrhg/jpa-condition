@@ -8,7 +8,7 @@ buildscript {
 }
 
 group 'com.example'
-version '0.0.03beta'
+version '0.0.04beta'
 
 apply plugin: 'java'
 
